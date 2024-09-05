@@ -1,0 +1,1 @@
+echo "清理旧文件..." && cd ./build/debug && make clean && cd ../../ &&  echo "重新生成makefile..." && echo "开始生成makefile..."  &&  cmake -Bbuild/debug -S. -DCMAKE_BUILD_TYPE=Debug && echo "开始编译..."  && cmake --build ./build/debug -j4 && echo "生成成功,启动程序..."  && ./build/debug/linux_network_prog
