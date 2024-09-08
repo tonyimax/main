@@ -43,7 +43,7 @@ void *handler_connect(void *arg){
     if(serv_sock_fd<0){
         printf("创建socket失败!\n");
     }else{
-        printf("===创建socket成功===\n");
+        printf("===创建socket成功,serv_sock_fd:%d===\n",serv_sock_fd);
     }
 
     //初始化地址

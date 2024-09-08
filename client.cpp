@@ -54,7 +54,7 @@ int main() {
 
         //接收服务端的字符串并显示
         //ssize_t recv(int socket, void *buffer, size_t length, int flags);
-        char recvbuf[512]={0};//最多接收512
+        char recvbuf[2048]={0};//最多接收512
         ssize_t recv_len = recv(sockfd,recvbuf, sizeof(recvbuf),0);//接收
         //显示
         printf("接收到服务器发来的字符串: %s ,长度:%zd\n\n",recvbuf,recv_len);
