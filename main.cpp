@@ -52,7 +52,7 @@ int main() {
 
     //网络地址转换
     //点分地十进制转整数
-    char myip[] = "192.168.16.117";//点分地十进制
+    char myip[] = "192.168.16.108";//点分地十进制
     unsigned int myip_int=0;//保存转换为整数的IP地址
     unsigned char *myip_point=NULL;//指向IP地址的指针
     //转换

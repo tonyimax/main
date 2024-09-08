@@ -26,8 +26,9 @@ int main() {
     struct sockaddr_in _addr;
     bzero(&_addr, sizeof(_addr));//清零
     _addr.sin_family=AF_INET;//使用IPv4地址通信
-    _addr.sin_port= htons(8888);//服务器端口
-    //暂时不指定IP地址
+    _addr.sin_port= htons(9999);//服务器端口
+    inet_aton("192.168.16.108",&_addr.sin_addr);//服务器IP
+
 
     // int connect(int socket, const struct sockaddr *address,socklen_t address_len);
     int conRet = connect(

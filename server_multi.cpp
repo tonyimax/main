@@ -17,6 +17,7 @@ void *handler_connect(void *arg);
 
 int activeConnect=0;//当前活动连接客户端
 std::vector<int> sockets(90,-1);
+int serv_sock_fd=0;
 
 int main(int argc,char* argv[])
 {
@@ -38,7 +39,7 @@ int main(int argc,char* argv[])
 
 void *handler_connect(void *arg){
     //创建socket
-    int serv_sock_fd = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
+    serv_sock_fd = socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
     if(serv_sock_fd<0){
         printf("创建socket失败!\n");
     }else{
@@ -111,7 +112,7 @@ void *recv_send_client(void *arg){
     int curSock = *(int*)&arg;
     printf("===子线程recv_send_client已启动,使用线程来处理socket:%d===\n",curSock);
     while (true){
-            if(curSock>0){
+            if(curSock>serv_sock_fd){
                 //接收客户端消息
                 char recvBuf[2048]={0};
                 ssize_t recvLen = recv(curSock,recvBuf,sizeof(recvBuf),0);
@@ -127,11 +128,14 @@ void *recv_send_client(void *arg){
                 printf("向客户端发送消息: \n长度:%zd\n内容:%s\n",sendLen,sendBuf);
 
                 if((0==strcmp(recvBuf,"q\n"))||(0==strcmp(recvBuf,"q\r\n"))){
-                    printf("接收到客户输入q,请求退出socket:%d\n",curSock);
-                    close(curSock);
-                    activeConnect -=1;
-                    printf("当前已连接客户端数量:%d\n",activeConnect);
-                    continue;//继续处理下一连接
+                    if(curSock>serv_sock_fd){
+                        printf("接收到客户输入q,请求退出socket:%d\n",curSock);
+                        close(curSock);
+                        curSock=-1;
+                        activeConnect -=1;
+                        printf("当前已连接客户端数量:%d\n",activeConnect);
+                        continue;//继续处理下一连接
+                    }
                 }
             }
     }
