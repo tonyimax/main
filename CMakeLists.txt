@@ -8,3 +8,5 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(${project_name} main.cpp) #生成main可执行程序
 add_executable(server server.cpp) #生成server可执行程序
 add_executable(client client.cpp) #生成client可执行程序
+add_executable(server_multi server_multi.cpp) #生成server_multi可执行文件
+add_executable(test test.cpp) #测试工程
